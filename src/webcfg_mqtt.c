@@ -1173,8 +1173,8 @@ int processPayload(char * data, int dataSize)
 	if(handleMqttResponse(response_code, contentLengthString, transaction_uuid) == 1)
 	{
 		WEBCFG_FREE(data);
-		WEBCFG_FREE(transaction_uuid);
-		WEBCFG_FREE(contentLengthString);
+		//WEBCFG_FREE(transaction_uuid);
+		//WEBCFG_FREE(contentLengthString);
 		return 1;
 	}
 
