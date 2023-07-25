@@ -43,6 +43,7 @@
 #define MQTT_PUBLISH_GET_TOPIC_PREFIX "x/fr/get/chi/"
 #define MQTT_PUBLISH_NOTIFY_TOPIC_PREFIX "x/fr/poke/chi/"
 #define MQTT_SUBSCRIBE_TOPIC "x/to/"
+#define MQTT_WEBCFG_SUBSCRIBER_NAME             "webconfig"
 
 #define MQTTCM_COMPONENT_NAME             "mqttConnManager"
 
