@@ -254,7 +254,7 @@ rbusError_t mqttSubscribeInit()
 		return RBUS_ERROR_BUS_ERROR;
 	}
 
-	snprintf(subscribe_topic, MAX_MQTT_LEN, "%s%s", MQTT_SUBSCRIBE_TOPIC, clientID);
+	snprintf(subscribe_topic, MAX_MQTT_LEN, "%s%s/%s", MQTT_SUBSCRIBE_TOPIC, clientID,MQTT_WEBCFG_SUBSCRIBER_NAME);
 
 	rbusObject_Init(&inParams, NULL);
 
