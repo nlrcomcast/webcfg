@@ -59,12 +59,14 @@ void getAuthToken()
 	//local var to update webpa_auth_token only in success case
 	char output[4069] = {'\0'} ;
 	char *serial_number=NULL;
+	WebcfgInfo("============ Starting of getAuthToken =======\n");
 	memset (webpa_auth_token, 0, sizeof(webpa_auth_token));
 
 	if( strlen(WEBPA_READ_HEADER) !=0 && strlen(WEBPA_CREATE_HEADER) !=0)
 	{
+		WebcfgInfo("Before get_deviceMAC\n");
                 get_deviceMAC();
-                WebcfgDebug("deviceMAC: %s\n",get_deviceMAC());
+                WebcfgInfo("deviceMAC: %s\n",get_deviceMAC());
 
 		if( get_deviceMAC() != NULL && strlen(get_deviceMAC()) !=0 )
 		{
@@ -75,7 +77,7 @@ void getAuthToken()
 		                if(serial_number != NULL && strlen(serial_number) > 0)
 		                {
 					strncpy(serialNum ,serial_number, sizeof(serialNum)-1);
-					WebcfgDebug("serialNum: %s\n", serialNum);
+					WebcfgInfo("serialNum: %s\n", serialNum);
 					WEBCFG_FREE(serial_number);
 					flag_unk = 0;
 		                }

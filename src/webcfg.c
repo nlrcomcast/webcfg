@@ -126,7 +126,7 @@ void *WebConfigMultipartTask(void *status)
 	WebcfgInfo("FEATURE_SUPPORT_AKER initWebConfigClient\n");
 	initWebConfigClient();
 #endif
-	WebcfgDebug("initDB %s\n", WEBCFG_DB_FILE);
+	WebcfgInfo("initDB %s\n", WEBCFG_DB_FILE);
 
 	initDB(WEBCFG_DB_FILE);
 
@@ -174,9 +174,9 @@ void *WebConfigMultipartTask(void *status)
 	{
 		if(forced_sync)
 		{
-			WebcfgDebug("Triggered Forced sync\n");
+			WebcfgInfo("Triggered Forced sync\n");
 			processWebconfgSync((int)Status, syncDoc);
-			WebcfgDebug("reset forced_sync after sync\n");
+			WebcfgInfo("reset forced_sync after sync\n");
 			forced_sync = 0;
 			if(get_global_supplementarySync() && syncDoc !=NULL)
 			{
@@ -186,7 +186,7 @@ void *WebConfigMultipartTask(void *status)
 			set_global_supplementarySync(0);
 			if(get_global_webcfg_forcedsync_started())
 			{
-				WebcfgDebug("reset webcfg_forcedsync_started\n");
+				WebcfgInfo("reset webcfg_forcedsync_started\n");
 				set_global_webcfg_forcedsync_started(0);
 			}
 		}
@@ -213,7 +213,7 @@ void *WebConfigMultipartTask(void *status)
 				{
 					WEBCFG_FREE(ForceSyncTransID);
 				}
-				WebcfgDebug("Triggered Supplementary doc boot sync\n");
+				WebcfgInfo("Triggered Supplementary doc boot sync\n");
 				SupplementaryDocs_t *sp = NULL;
 				sp = get_global_spInfoHead();
 
@@ -245,7 +245,7 @@ void *WebConfigMultipartTask(void *status)
 		clock_gettime(CLOCK_REALTIME, &ts);
 
 		retry_flag = get_doc_fail();
-		WebcfgDebug("The retry flag value is %d\n", retry_flag);
+		WebcfgInfo("The retry flag value is %d\n", retry_flag);
 
 		if ( retry_flag == 0)
 		{
@@ -551,7 +551,7 @@ void processWebconfgSync(int status, char* docname)
 	char ct[256] = {0};
 	size_t dataSize=0;
 
-	WebcfgDebug("========= Start of processWebconfgSync =============\n");
+	WebcfgInfo("========= Start of processWebconfgSync =============\n");
 	while(1)
 	{
 		transaction_uuid =NULL;
@@ -574,7 +574,7 @@ void processWebconfgSync(int status, char* docname)
 			rv = handlehttpResponse(res_code, webConfigData, retry_count, transaction_uuid, ct, dataSize);
 			if(rv ==1)
 			{
-				WebcfgDebug("No curl retries are required. Exiting..\n");
+				WebcfgInfo("No curl retries are required. Exiting..\n");
 				break;
 			}
 		}
@@ -592,7 +592,7 @@ void processWebconfgSync(int status, char* docname)
 			WebcfgInfo("Webconfig curl retry_count to server is %d\n", retry_count);
 		}
 	}
-	WebcfgDebug("========= End of processWebconfgSync =============\n");
+	WebcfgInfo("========= End of processWebconfgSync =============\n");
 	return;
 }
 

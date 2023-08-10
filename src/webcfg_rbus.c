@@ -941,7 +941,7 @@ rbusError_t webcfgSubdocForceResetSetHandler(rbusHandle_t handle, rbusProperty_t
         return RBUS_ERROR_ELEMENT_DOES_NOT_EXIST;
     }
 
-    WebcfgDebug("Parameter name is %s \n", paramName);
+    WebcfgInfo("Parameter name is %s \n", paramName);
     rbusValueType_t type_t;
     rbusValue_t paramValue_t = rbusProperty_GetValue(prop);
     if(paramValue_t) {
@@ -989,7 +989,7 @@ rbusError_t webcfgSubdocForceResetSetHandler(rbusHandle_t handle, rbusProperty_t
 
 		if(n>0)
 		{
-			WebcfgDebug("Check all subdocs present in webconfig db\n");
+			WebcfgInfo("Check all subdocs present in webconfig db\n");
                         for(int i=0;i<=n;i++)
 			{
 				ret = checkSubdocInDb(subdocNames[i]);
@@ -1001,7 +1001,7 @@ rbusError_t webcfgSubdocForceResetSetHandler(rbusHandle_t handle, rbusProperty_t
 		        }
 		        for(int i=0;i<=n;i++)
 		        {
-				WebcfgDebug("Subdoc going to be reset is - %s\n", subdocNames[i]);
+				WebcfgInfo("Subdoc going to be reset is - %s\n", subdocNames[i]);
 				ret = resetSubdocVersion(subdocNames[i]);
 				if(ret != ERROR_SUCCESS)
 				{
@@ -1022,7 +1022,7 @@ rbusError_t webcfgSubdocForceResetSetHandler(rbusHandle_t handle, rbusProperty_t
 		        WebcfgInfo("Published subdoc reset event %s\n", WEBCFG_SUBDOC_FORCERESET_PARAM);
 			WebcfgInfo("trigger forcesync with cloud on subdoc force reset\n");
 			trigger_webcfg_forcedsync();
-			WebcfgDebug("trigger forcesync on subdoc force reset done\n");
+			WebcfgInfo("trigger forcesync on subdoc force reset done\n");
 		 }
             }
 	    else {
@@ -1610,9 +1610,10 @@ void getValues_rbus(const char *paramName[], const unsigned int paramCount, int 
 		WebcfgError("getValues_rbus Failed as rbus_handle is not initialized\n");
 		return;
 	}
+	WebcfgInfo("Before rbus_getExt in getValues_rbus\n");
 	rc = rbus_getExt(rbus_handle, paramCount, paramName, &resCount, &props);
 
-	WebcfgDebug("rbus_getExt rc=%d resCount=%d\n", rc, resCount);
+	WebcfgInfo("rbus_getExt rc=%d resCount=%d\n", rc, resCount);
 
 	if(RBUS_ERROR_SUCCESS != rc)
 	{
