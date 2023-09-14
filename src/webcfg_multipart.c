@@ -217,7 +217,7 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 	char configURL[256] = { 0 };
 	char c[] = "{mac}";
 	int rv = 0;
-	int rc = -1;
+	//int rc = -1;
 	
 	int content_res=0;
 	struct token_data data;
@@ -283,8 +283,8 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 			webConfigURL = replaceMacWord(configURL, c, get_deviceMAC());
 			if(get_global_supplementarySync() == 0)
 			{
-				rc = Set_Webconfig_URL(webConfigURL);
-				if(rc == RBUS_ERROR_SUCCESS)
+				Set_Webconfig_URL(webConfigURL);
+				/*if(rc == RBUS_ERROR_SUCCESS)
 				{
 					set_global_webconfig_url(webConfigURL);
 					WebcfgInfo("Global set Webconfig URL:%s\n",webConfigURL);					
@@ -292,12 +292,12 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 				else
 				{
 					WebcfgError("Failed to set Webconfig URL\n");
-				}				
+				}*/				
 			}
 			else
 			{
-				rc = Set_Supplementary_URL(docname_upper, webConfigURL);
-				if(rc == RBUS_ERROR_SUCCESS)
+				Set_Supplementary_URL(docname_upper, webConfigURL);
+				/*if(rc == RBUS_ERROR_SUCCESS)
 				{
 					set_global_supplementary_url(webConfigURL);
 					WebcfgInfo("Global set Supplementary URL:%s\n",webConfigURL);					
@@ -305,7 +305,7 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 				else
 				{
 					WebcfgError("Failed to set Supplementary URL\n");					
-				}
+				}*/
 			}
 		}
 		else
