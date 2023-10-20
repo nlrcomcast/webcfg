@@ -157,6 +157,7 @@ ExternalProject_Add(curl
 )
 add_library(libcurl STATIC SHARED IMPORTED)
 add_dependencies(libcurl curl)
+
 endif()
 #find_library( LIB_CURL,
 #              NAMES curl
