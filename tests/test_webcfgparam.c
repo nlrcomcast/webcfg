@@ -20,7 +20,7 @@
 #include <CUnit/Basic.h>
 #include "../src/webcfg_param.h"
 
-#define WEB_CFG_FILE "../../tests/webcfg-now100.bin"
+#define WEB_CFG_FILE "../../tests/wanmanager.bin"
 int readFromFile(char **data, int *len)
 {
 	FILE *fp;
@@ -66,10 +66,10 @@ void test_basic()
 		printf( "errno: %s\n", webcfgparam_strerror(err) );
 		CU_ASSERT_FATAL( NULL != pm );
 		CU_ASSERT_FATAL( NULL != pm->entries );
-		CU_ASSERT_FATAL( 100 == pm->entries_count );
-		CU_ASSERT_STRING_EQUAL( "Device.DeviceInfo.X_RDKCENTRAL-COM_CloudUIEnable", pm->entries[0].name );
-		CU_ASSERT_STRING_EQUAL( "false", pm->entries[0].value );
-		CU_ASSERT_FATAL( 3 == pm->entries[0].type );
+		CU_ASSERT_FATAL( 1 == pm->entries_count );
+		CU_ASSERT_STRING_EQUAL( "Device.X_RDK_WanManager.Data", pm->entries[0].name );
+		//CU_ASSERT_STRING_EQUAL( "false", pm->entries[0].value );
+		CU_ASSERT_FATAL( 12 == pm->entries[0].type );
 		for(i = 0; i < (int)pm->entries_count ; i++)
 		{
 			printf("pm->entries[%d].name %s\n", i, pm->entries[i].name);
@@ -81,10 +81,22 @@ void test_basic()
 	}
 }
 
+void test_webcfgparam_strerror()
+{
+	const char *txt;
+	txt = webcfgparam_strerror(0);
+	CU_ASSERT_STRING_EQUAL(txt,"No errors.");
+	txt = webcfgparam_strerror(1);
+	CU_ASSERT_STRING_EQUAL(txt,"Out of memory.");	
+	txt = webcfgparam_strerror(10);
+	CU_ASSERT_STRING_EQUAL(txt,"Unknown error.");	
+}
+
 void add_suites( CU_pSuite *suite )
 {
     *suite = CU_add_suite( "tests", NULL, NULL );
     CU_add_test( *suite, "Full", test_basic);
+	CU_add_test( *suite, "test webcfgparam_strerror", test_webcfgparam_strerror);
 }
 
 /*----------------------------------------------------------------------------*/
