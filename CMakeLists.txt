@@ -66,6 +66,8 @@ if (MULTIPART_UTILITY)
 add_definitions(-DMULTIPART_UTILITY)
 endif (MULTIPART_UTILITY)
 
+if (BUILD_GIT)
+
 if (WEBCONFIG_BIN_SUPPORT)
 
 # rbus external dependency
@@ -86,6 +88,7 @@ add_dependencies(librtMessage rtMessage)
 add_library(librbus STATIC SHARED IMPORTED)
 add_dependencies(librbus rbus)
 endif (WEBCONFIG_BIN_SUPPORT)
+endif (BUILD_GIT)
 
 # msgpack-c external dependency
 #-------------------------------------------------------------------------------
@@ -223,6 +226,30 @@ add_library(libcmocka STATIC SHARED IMPORTED)
 add_dependencies(libcmocka cmocka)
 
 endif (BUILD_TESTING)
+
+if (NOT BUILD_GIT)
+if (WEBCONFIG_BIN_SUPPORT)
+
+# rbus external dependency
+#-------------------------------------------------------------------------------
+ExternalProject_Add(rbus
+     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/_prefix/rbus
+     GIT_REPOSITORY https://github.com/rdkcentral/rbus.git
+     GIT_TAG main
+     CMAKE_ARGS += -DBUILD_FOR_DESKTOP=ON -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} -DBUILD_TESTING=OFF
+)
+
+add_library(librbuscore STATIC SHARED IMPORTED)
+add_dependencies(librbuscore rbuscore)
+
+add_library(librtMessage STATIC SHARED IMPORTED)
+add_dependencies(librtMessage rtMessage)
+
+add_library(librbus STATIC SHARED IMPORTED)
+add_dependencies(librbus rbus)
+endif (WEBCONFIG_BIN_SUPPORT)
+endif ()
+
 endif ()
 
 link_directories ( ${LIBRARY_DIR} ${COMMON_LIBRARY_DIR} ${LIBRARY_DIR64} )

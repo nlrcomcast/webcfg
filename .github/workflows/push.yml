@@ -50,7 +50,7 @@ jobs:
       - name: CMake
         working-directory: build
         run: |
-          cmake .. -DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true -DINTEGRATION_TESTING:BOOL=false -DDISABLE_VALGRIND:BOOL=${DISABLE_VALGRIND} -DENABLE_SESHAT:BOOL=true -DFEATURE_DNS_QUERY:BOOL=true
+          cmake .. -DBUILD_GIT:BOOL=true -DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true -DINTEGRATION_TESTING:BOOL=false -DDISABLE_VALGRIND:BOOL=${DISABLE_VALGRIND} -DENABLE_SESHAT:BOOL=true -DFEATURE_DNS_QUERY:BOOL=true
 
       - name: Unit tests run
         working-directory: build
