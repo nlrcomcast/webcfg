@@ -89,7 +89,7 @@ set(COMMON_LIBS ${COMMON_LIBS} -lcurl)
 endif()
 
 if (NOT DEVICE_EXTENDER)
-set(COMMON_LIBS ${COMMON_LIBS} -lcimplog)
+set(COMMON_LIBS ${COMMON_LIBS} )
 else ()
 add_definitions(-DDEVICE_EXTENDER)
 endif()
