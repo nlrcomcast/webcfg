@@ -92,8 +92,8 @@ void initWebcfgProperties(char * filename)
 			
 			p = str;
 			char *tok = NULL;
-			//WebcfgDebug("The value of tok is %s\n", tok);
 			tok = strtok_r(p, " =",&p);
+			WebcfgDebug("The value of tok is %s\n", tok);
 			token = strtok_r(p,",",&p);
 			while(token!= NULL)
 			{
