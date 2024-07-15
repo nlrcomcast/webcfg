@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#if ! defined(DEVICE_EXTENDER)
+#if defined(DEVICE_EXTENDER)
 #include <cimplog.h>
 #endif
 
@@ -14,7 +14,7 @@
 /**
  * @brief Enables or disables debug logs.
  */
-#if defined(BUILD_YOCTO) && ! defined(DEVICE_EXTENDER)
+#if !defined(BUILD_YOCTO) && defined(DEVICE_EXTENDER)
 
 #define WEBCFG_RDK_LOGGING_MODULE                 "LOG.RDK.WEBCONFIG"
 
