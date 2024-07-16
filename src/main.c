@@ -58,18 +58,18 @@ int main()
 	int systemStatus = -1;
     	struct timespec cTime;
     	char systemReadyTime[32]={'\0'};
-#ifdef INCLUDE_BREAKPAD
-#ifndef DEVICE_CAMERA
-    breakpad_ExceptionHandler();
-#else
-    /* breakpad handles the signals SIGSEGV, SIGBUS, SIGFPE, and SIGILL */
-    BreakPadWrapExceptionHandler eh;
-    eh = newBreakPadWrapExceptionHandler();
-    if(NULL != eh) {
-        WebcfgInfo("Breakpad Initialized\n");
-    }
-#endif //DEVICE_CAMERA
-#else
+// #ifdef INCLUDE_BREAKPAD
+// #ifndef DEVICE_CAMERA
+//     breakpad_ExceptionHandler();
+// #else
+//     /* breakpad handles the signals SIGSEGV, SIGBUS, SIGFPE, and SIGILL */
+//     BreakPadWrapExceptionHandler eh;
+//     eh = newBreakPadWrapExceptionHandler();
+//     if(NULL != eh) {
+//         WebcfgInfo("Breakpad Initialized\n");
+//     }
+// #endif //DEVICE_CAMERA
+// #else
 	signal(SIGTERM, sig_handler);
 	signal(SIGINT, sig_handler);
 	signal(SIGUSR1, sig_handler);
@@ -84,13 +84,13 @@ int main()
 	signal(SIGALRM, sig_handler);
 #endif
 	WebcfgInfo("********** Starting component: %s **********\n ", WEBCFG_COMPONENT_NAME);
-	webcfg_drop_root_privilege();
+	//webcfg_drop_root_privilege();
 #if !defined (FEATURE_SUPPORT_MQTTCM)
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 #endif
 	if(isRbusEnabled())
 	{
-		registerRbusLogger();
+		//registerRbusLogger();
 		WebcfgDebug("RBUS mode. webconfigRbusInit\n");
 		webconfigRbusInit(WEBCFG_COMPONENT_NAME);
 		regWebConfigDataModel();
