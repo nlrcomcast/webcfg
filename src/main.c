@@ -82,7 +82,7 @@ int main()
 	signal(SIGQUIT, sig_handler);
 	signal(SIGHUP, sig_handler);
 	signal(SIGALRM, sig_handler);
-#endif
+//#endif
 	WebcfgInfo("********** Starting component: %s **********\n ", WEBCFG_COMPONENT_NAME);
 	//webcfg_drop_root_privilege();
 #if !defined (FEATURE_SUPPORT_MQTTCM)
