@@ -2010,7 +2010,9 @@ void delete_multipart()
 	{
 		temp = head;
 		head = head->next;
-		WebcfgDebug("Deleted mp node: temp->name_space:%s\n", temp->name_space);
+		WebcfgInfo("Deleted mp node: temp->name_space:%s\n", temp->name_space);
+		WEBCFG_FREE(temp->name_space);
+		WEBCFG_FREE(temp->data);
 		free(temp);
 		temp = NULL;
 	}
