@@ -14,13 +14,11 @@
 
 set(PROJ_WEBCFG webcfg)
 
-if (PLATFORM STREQUAL "DEVICE_GATEWAY")
-add_definitions(-DDEVICE_GATEWAY)
-endif ()
+
 
 if (WEBCONFIG_BIN_SUPPORT)
 add_definitions(-DWEBCONFIG_BIN_SUPPORT)
-
+add_definitions(-DDEVICE_GATEWAY)
 if (FEATURE_SUPPORT_MQTTCM)
 add_definitions(-DFEATURE_SUPPORT_MQTTCM)
 endif (FEATURE_SUPPORT_MQTTCM)
