@@ -13,8 +13,10 @@
 #   limitations under the License.
 
 set(PROJ_WEBCFG webcfg)
+
 if (PLATFORM STREQUAL "DEVICE_GATEWAY")
 add_definitions(-DDEVICE_GATEWAY)
+endif ()
 
 if (WEBCONFIG_BIN_SUPPORT)
 add_definitions(-DWEBCONFIG_BIN_SUPPORT)
