@@ -347,6 +347,7 @@ int Get_Webconfig_URL( char *pString)
 				cpeabStrncpy(pString, tempUrl, strlen(tempUrl)+1);
 			}
 			CpeabsDebug("Get_Webconfig_URL. pString %s\n", pString);
+			CPEABS_FREE(tempUrl);
 		}
 		else
                 {
@@ -398,6 +399,7 @@ int Get_Supplementary_URL( char *name, char *pString)
 				}
 				CpeabsDebug("Get_Supplementary_URL. pString %s\n", pString);
 				CPEABS_FREE(tempParam);
+				CPEABS_FREE(tempUrl);
 			}
 			else
 			{
