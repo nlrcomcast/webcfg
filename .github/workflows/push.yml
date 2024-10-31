@@ -61,7 +61,10 @@ jobs:
           mkdir _install
           mkdir _install/lib
           cp ${RBUS_INSTALL_DIR}/usr/lib/librbus* _install/lib                   
-          build-wrapper-linux-x86-64 --out-dir bw-output make all test 
+          build-wrapper-linux-x86-64 --out-dir bw-output make all
+          cd tests
+          ./test_rbus_fr
+          cd ..
               
       - name: Stop rtrouted
         run: |
