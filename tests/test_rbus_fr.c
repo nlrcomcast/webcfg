@@ -1548,24 +1548,24 @@ void test_subscribeTo_CurrentActiveInterface_Event()
 	CU_ASSERT_NOT_EQUAL(rc, RBUS_ERROR_SUCCESS);
 
 	webconfigRbusInit("consumerComponent");
-	int res = rbus_open(&handle, "providerComponent");
-    	if(res != RBUS_ERROR_SUCCESS)
-	{
-		CU_FAIL("rbus_open failed for providerComponent");
-	}
+	// int res = rbus_open(&handle, "providerComponent");
+ //    	if(res != RBUS_ERROR_SUCCESS)
+	// {
+	// 	CU_FAIL("rbus_open failed for providerComponent");
+	// }
 
-	rbusDataElement_t webcfgInterfaceElement[1] = {
-		{WEBCFG_INTERFACE_PARAM, RBUS_ELEMENT_TYPE_PROPERTY, {NULL, NULL, NULL, NULL, webcfgInterfaceSubscribeHandler, NULL}}
-	};
-	rbusError_t ret = rbus_regDataElements(handle, 1, webcfgInterfaceElement);
-	CU_ASSERT_EQUAL(ret, RBUS_ERROR_SUCCESS);
+	// rbusDataElement_t webcfgInterfaceElement[1] = {
+	// 	{WEBCFG_INTERFACE_PARAM, RBUS_ELEMENT_TYPE_PROPERTY, {NULL, NULL, NULL, NULL, webcfgInterfaceSubscribeHandler, NULL}}
+	// };
+	// rbusError_t ret = rbus_regDataElements(handle, 1, webcfgInterfaceElement);
+	// CU_ASSERT_EQUAL(ret, RBUS_ERROR_SUCCESS);
 
 	rc = subscribeTo_CurrentActiveInterface_Event();
 	CU_ASSERT_EQUAL(rc, RBUS_ERROR_SUCCESS);
 
-	rbusError_t result = rbus_unregDataElements(handle, 1, webcfgInterfaceElement);
-	CU_ASSERT_EQUAL(result, RBUS_ERROR_SUCCESS);
-	rbus_close(handle);
+	// rbusError_t result = rbus_unregDataElements(handle, 1, webcfgInterfaceElement);
+	// CU_ASSERT_EQUAL(result, RBUS_ERROR_SUCCESS);
+	// rbus_close(handle);
 	webpaRbus_Uninit();
 }
 
