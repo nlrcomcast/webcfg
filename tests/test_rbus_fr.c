@@ -1669,6 +1669,7 @@ void test_eventReceiveHandler()
 	CU_ASSERT_STRING_EQUAL(get_global_interface(),"eth2");
 	rbus_unregDataElements(handle, 1, wanMgrRbusDataElements);
 	rbus_close(handle);
+	rbus_handle = get_global_rbus_handle();
 	rbusEvent_Unsubscribe(rbus_handle,WEBCFG_INTERFACE_PARAM);	
 	webpaRbus_Uninit();		
 }
