@@ -2586,3 +2586,7 @@ void setForceSyncTransID(char *ForceSyncTransID)
 		webcfgStrncpy( g_ForceSyncTransID, ForceSyncTransID, sizeof(g_ForceSyncTransID));
 	}
 }
+
+const char* getForceSyncTransID() {
+    return g_ForceSyncTransID;
+}
