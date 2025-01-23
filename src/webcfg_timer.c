@@ -239,15 +239,15 @@ int retrySyncSeconds()
 
 	retry_secs =  get_global_retry_timestamp() - current_time_in_sec;
 
-	WebcfgDebug("The current time in retrySyncSeconds is %lld at %s\n",current_time, printTime(current_time));
-	WebcfgDebug("The random timer in retrySyncSeconds is %ld\n",get_global_retry_timestamp());
+	WebcfgInfo("The current time in retrySyncSeconds is %lld at %s\n",current_time, printTime(current_time));
+	WebcfgInfo("The random timer in retrySyncSeconds is %ld\n",get_global_retry_timestamp());
 
 	if (retry_secs < 0)
 	{
 		retry_secs = 0;
 	}
 
-	WebcfgDebug("The retry Seconds is %ld\n", retry_secs);
+	WebcfgInfo("The retry Seconds is %ld\n", retry_secs);
 
 	return retry_secs;
 }
@@ -283,13 +283,13 @@ int updateRetryTimeDiff(long long expiry_time)
 	present_time = ct.tv_sec;
 
 	time_diff = expiry_time - present_time;
-
+	WebcfgInfo("The retry_timer is %d after set, time_diff:%d\n", get_retry_timer(),time_diff);
 	//To set the lowest retry timeout of all the docs
 	if(get_retry_timer() > time_diff)
 	{
 		set_retry_timer(time_diff);
 		set_global_retry_timestamp(getTimeInSeconds(expiry_time));
-		WebcfgDebug("The retry_timer is %d after set\n", get_retry_timer());
+		WebcfgInfo("The retry_timer is %d after set\n", get_retry_timer());
 	}
 	if(get_global_retry_timestamp() == 0)
 	{
@@ -324,12 +324,12 @@ int checkRetryTimer( long long timestamp)
 	clock_gettime(CLOCK_REALTIME, &rt);
 	cur_time = rt.tv_sec;
 
-	WebcfgDebug("The current time in device is %lld at %s\n", cur_time, printTime(cur_time));
-	WebcfgDebug("The Retry timestamp is %lld at %s\n", timestamp, printTime(timestamp));
+	WebcfgInfo("The current time in device is %lld at %s\n", cur_time, printTime(cur_time));
+	WebcfgInfo("The Retry timestamp is %lld at %s\n", timestamp, printTime(timestamp));
 
 	if(cur_time >= timestamp)
 	{
-		WebcfgDebug("Retry timestamp is equal to current time\n");
+		WebcfgInfo("Retry timestamp is equal to current time\n");
 		return 1;
 	}
 	return 0;

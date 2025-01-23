@@ -286,12 +286,15 @@ void *WebConfigMultipartTask(void *status)
 		}
 		else
 		{
+			set_retry_timer(900);
+			set_global_retry_timestamp(0);
+			failedDocsRetry();
 			if(get_global_retry_timestamp() != 0)
 			{
 				set_retry_timer(retrySyncSeconds());
 			}
 			ts.tv_sec += get_retry_timer();
-			WebcfgDebug("The retry triggers at %s\n", printTime((long long)ts.tv_sec));
+			WebcfgInfo("The retry triggers at %s\n", printTime((long long)ts.tv_sec));
 		}
 		if(get_global_webcfg_forcedsync_needed() == 1 || get_cloud_forcesync_retry_needed() == 1)
 		{
@@ -313,8 +316,8 @@ void *WebConfigMultipartTask(void *status)
 			set_maintenanceSync(false);
 			WebcfgInfo("reset maintenanceSync to false\n");
 			rv = pthread_cond_timedwait(&sync_condition, &sync_mutex, &ts);
-			WebcfgDebug("The retry flag value is %d\n", get_doc_fail());
-			WebcfgDebug("The value of rv %d\n", rv);
+			WebcfgInfo("The retry flag value is %d\n", get_doc_fail());
+			WebcfgInfo("The value of rv %d \n", rv);
 		}
 		else 
 		{
@@ -347,7 +350,6 @@ void *WebConfigMultipartTask(void *status)
 			{
 				WebcfgInfo("ForceSyncDoc %s ForceSyncTransID. %s\n", ForceSyncDoc, ForceSyncTransID);
 			}
-
 				if((ForceSyncDoc != NULL) && strlen(ForceSyncDoc)>0)
 				{
 					forced_sync = 1;
