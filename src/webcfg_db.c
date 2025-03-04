@@ -88,7 +88,7 @@ WEBCFG_STATUS initDB(char * db_file_path )
      struct stat st;
      webconfig_db_data_t* dm = NULL;
 	
-     WebcfgDebug("DB file path is %s\n", db_file_path);
+     WebcfgInfo("DB file path is %s\n", db_file_path);
      fd = open(db_file_path,O_RDONLY);
 
      if (fd == -1)
@@ -186,12 +186,12 @@ WEBCFG_STATUS generateBlob()
 
     if(webcfgdb_blob)
     {
-	WebcfgDebug("Delete existing webcfgdb_blob.\n");
+	WebcfgInfo("Delete existing webcfgdb_blob.\n");
 	WEBCFG_FREE(webcfgdb_blob->data);
 	WEBCFG_FREE(webcfgdb_blob);
 	webcfgdb_blob = NULL;
     }
-    WebcfgDebug("Generate new blob\n");
+    WebcfgInfo("Generate new blob\n");
     if(webcfgdb_data != NULL || g_head != NULL)
     {
         webcfgdbBlobPackSize = webcfgdb_blob_pack(webcfgdb_data, g_head, &data);
@@ -203,7 +203,7 @@ WEBCFG_STATUS generateBlob()
             webcfgdb_blob->data = (char *)data;
             webcfgdb_blob->len  = webcfgdbBlobPackSize;
 
-            WebcfgDebug("The webcfgdbBlobPackSize is : %zu\n",webcfgdb_blob->len);
+            WebcfgInfo("The webcfgdbBlobPackSize is : %zu\n",webcfgdb_blob->len);
             return WEBCFG_SUCCESS;
         }
         else
@@ -245,6 +245,7 @@ int writeToDBFile(char *db_file_path, char *data, size_t size)
 //Used to decode the DB bin file 
 webconfig_db_data_t* decodeData(const void * buf, size_t len)
 {
+	WebcfgInfo("decodeData\n");
      return helper_convert( buf, len, sizeof(webconfig_db_data_t),"webcfgdb",
                            MSGPACK_OBJECT_ARRAY, true,
                            (process_fn_t) process_webcfgdb,
@@ -263,6 +264,7 @@ blob_struct_t* decodeBlobData(const void * buf, size_t len)
 
 void webcfgdb_destroy( webconfig_db_data_t *pm )
 {
+	WebcfgInfo("webcfgdb_destroy\n");
 	if( NULL != pm )
 	{
 		if( NULL != pm->name )
@@ -271,6 +273,7 @@ void webcfgdb_destroy( webconfig_db_data_t *pm )
 		}
 		WEBCFG_FREE( pm );
 	}
+	WebcfgInfo("webcfgdb_destroy exit\n");
 }
 
 void webcfgdbblob_destroy( blob_struct_t *bd )
@@ -933,7 +936,7 @@ int process_webcfgdb( webconfig_db_data_t *wd, msgpack_object *obj )
 	pthread_mutex_lock (&webconfig_db_mut);
         webcfgdb_data = NULL;
 	pthread_mutex_unlock (&webconfig_db_mut);
-        WebcfgDebug("entries_count %zu\n",entries_count);
+        WebcfgInfo("entries_count %zu\n",entries_count);
         for( i = 0; i < entries_count; i++ )
         {
             wd = (webconfig_db_data_t *) malloc (sizeof(webconfig_db_data_t));
@@ -965,7 +968,7 @@ int process_webcfgdb( webconfig_db_data_t *wd, msgpack_object *obj )
             }
         }
     }
-
+	WebcfgInfo("process_webcfgdb exit\n");
     return 0;
 }
 
@@ -1141,7 +1144,7 @@ int process_webcfgdbblobparams( blob_data_t *e, msgpack_object_map *map )
     {
     }
     else if( (1 << 3) & objects_left ) {
-	    WebcfgDebug("Skip optional root_string element\n");
+	    WebcfgInfo("Skip optional root_string element\n");
         objects_left &= ~(1 << 3);
     }
     else
@@ -1154,7 +1157,7 @@ int process_webcfgdbblobparams( blob_data_t *e, msgpack_object_map *map )
 
 int process_webcfgdbblob( blob_struct_t *bd, msgpack_object *obj )
 {
-    WebcfgDebug(" process_webcfgdbblob \n");
+    WebcfgInfo(" process_webcfgdbblob \n");
     msgpack_object_array *array = &obj->via.array;
     if( 0 < array->size )
     {
@@ -1168,7 +1171,7 @@ int process_webcfgdbblob( blob_struct_t *bd, msgpack_object *obj )
             return -1;
         }
         
-        WebcfgDebug("bd->entries_count %zu\n",bd->entries_count);
+        WebcfgInfo("bd->entries_count %zu\n",bd->entries_count);
         memset( bd->entries, 0, sizeof(blob_data_t) * bd->entries_count );
         for( i = 0; i < bd->entries_count; i++ )
         {
@@ -1184,7 +1187,7 @@ int process_webcfgdbblob( blob_struct_t *bd, msgpack_object *obj )
             }
         }
     }
-
+	WebcfgInfo(" process_webcfgdbblob end\n");
     return 0;
 }
 char * base64blobencoder(char * blob_data, size_t blob_size )

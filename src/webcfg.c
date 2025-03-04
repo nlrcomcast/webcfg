@@ -133,7 +133,7 @@ void *WebConfigMultipartTask(void *status)
 	WebcfgInfo("FEATURE_SUPPORT_AKER initWebConfigClient\n");
 	initWebConfigClient();
 #endif
-	WebcfgDebug("initDB %s\n", WEBCFG_DB_FILE);
+	WebcfgInfo("initDB %s\n", WEBCFG_DB_FILE);
 
 	initDB(WEBCFG_DB_FILE);
 
