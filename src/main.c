@@ -149,10 +149,10 @@ int main()
 		WebcfgInfo("DBUS mode. Webconfig bin is not supported in Dbus\n");
 	}
 
-	WebcfgDebug("pthread_mutex_lock webcfg_mut and wait.\n");
+	WebcfgInfo("pthread_mutex_lock webcfg_mut and wait.\n");
 	pthread_mutex_lock(&webcfg_mut);
 	pthread_cond_wait(&webcfg_con, &webcfg_mut);
-	WebcfgDebug("pthread_mutex_unlock webcfg_mut\n");
+	WebcfgInfo("pthread_mutex_unlock webcfg_mut\n");
 	pthread_mutex_unlock (&webcfg_mut);
 #if !defined (FEATURE_SUPPORT_MQTTCM)
 	curl_global_cleanup();

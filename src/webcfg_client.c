@@ -98,7 +98,7 @@ static void connect_parodus()
 	char *client_url = NULL;
 
 	max_retry_sleep = (int) pow(2, backoff_max_time) -1;
-	WebcfgDebug("max_retry_sleep is %d\n", max_retry_sleep );
+	WebcfgInfo("max_retry_sleep is %d\n", max_retry_sleep );
 
 	get_parodus_url(&parodus_url, &client_url);
 
@@ -120,7 +120,7 @@ static void connect_parodus()
 			}
 			WebcfgInfo("New backoffRetryTime value calculated as %d seconds\n", backoffRetryTime);
 			int ret =libparodus_init (&webcfg_instance, &cfg1);
-			WebcfgDebug("ret is %d\n",ret);
+			WebcfgInfo("ret is %d\n",ret);
 			if(ret ==0)
 			{
 				WebcfgInfo("Init for parodus Success..!!\n");
@@ -161,7 +161,7 @@ void* parodus_receive()
 	{
 		if (get_global_shutdown())
 		{
-			WebcfgDebug("g_shutdown true, break libparodus_receive\n");
+			WebcfgInfo("g_shutdown true, break libparodus_receive\n");
 			sleep_counter = 0;
 			break;
 		}
@@ -182,7 +182,7 @@ void* parodus_receive()
 			{
 				webconfig_tmp_data_t * docNode = NULL;
 				err = getStatusErrorCodeAndMessage(LIBPARODUS_RECEIVE_FAILURE, &errmsg);
-				WebcfgDebug("The error_details is %s and err_code is %d\n", errmsg, err);
+				WebcfgError("The error_details is %s and err_code is %d\n", errmsg, err);
 				docNode = getTmpNode("aker");
 				if(docNode !=NULL)
 				{
@@ -203,8 +203,8 @@ void* parodus_receive()
 		{
 			set_send_aker_flag(false);
 			sleep_counter = 0;
-			WebcfgDebug("Message received with type %d\n",wrp_msg->msg_type);
-			WebcfgDebug("transaction_uuid %s\n", wrp_msg->u.crud.transaction_uuid );
+			WebcfgInfo("Message received with type %d\n",wrp_msg->msg_type);
+			WebcfgInfo("transaction_uuid %s\n", wrp_msg->u.crud.transaction_uuid );
 			if ((wrp_msg->msg_type == WRP_MSG_TYPE__UPDATE) ||(wrp_msg->msg_type == WRP_MSG_TYPE__DELETE))
 			{
 				processAkerUpdateDelete(wrp_msg);

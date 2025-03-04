@@ -1412,7 +1412,7 @@ DATA_TYPE mapRbusToWdmpDataType(rbusValueType_t rbusType)
 			wdmp_type = WDMP_NONE;
 			break;
 	}
-	WebcfgDebug("mapRbusToWdmpDataType : wdmp_type is %d\n", wdmp_type);
+	WebcfgInfo("mapRbusToWdmpDataType : wdmp_type is %d\n", wdmp_type);
 	return wdmp_type;
 }
 
@@ -1623,11 +1623,11 @@ void getValues_rbus(const char *paramName[], const unsigned int paramCount, int 
 
 	for(cnt = 0; cnt < paramCount; cnt++)
 	{
-		WebcfgDebug("rbus_getExt paramName[%d] : %s paramCount %d\n",cnt,paramName[cnt], paramCount);
+		WebcfgInfo("rbus_getExt paramName[%d] : %s paramCount %d\n",cnt,paramName[cnt], paramCount);
 	}
 
-	WebcfgDebug("setValues_rbus index %d\n", index);
-	WebcfgDebug("getValues_rbus timeSpan %p\n",timeSpan);
+	WebcfgInfo("setValues_rbus index %d\n", index);
+	WebcfgInfo("getValues_rbus timeSpan %p\n",timeSpan);
 
 	if(!rbus_handle)
 	{
@@ -1636,7 +1636,7 @@ void getValues_rbus(const char *paramName[], const unsigned int paramCount, int 
 	}
 	rc = rbus_getExt(rbus_handle, paramCount, paramName, &resCount, &props);
 
-	WebcfgDebug("rbus_getExt rc=%d resCount=%d\n", rc, resCount);
+	WebcfgInfo("rbus_getExt rc=%d resCount=%d\n", rc, resCount);
 
 	if(RBUS_ERROR_SUCCESS != rc)
 	{
@@ -1648,29 +1648,29 @@ void getValues_rbus(const char *paramName[], const unsigned int paramCount, int 
 	{
 		rbusProperty_t next = props;
 		val_size = resCount;
-		WebcfgDebug("val_size : %d\n",val_size);
+		WebcfgInfo("val_size : %d\n",val_size);
 		if(val_size > 0)
 		{
 			if(paramCount == val_size)
 			{
 				for (i = 0; i < resCount; i++)
 				{
-					WebcfgDebug("Response Param is %s\n", rbusProperty_GetName(next));
+					WebcfgInfo("Response Param is %s\n", rbusProperty_GetName(next));
 					paramValue_t = rbusProperty_GetValue(next);
 
 					if(paramValue_t)
 					{
 						type_t = rbusValue_GetType(paramValue_t);
 						paramValue = rbusValue_ToString(paramValue_t, NULL, 0);
-						WebcfgDebug("Response paramValue is %s\n", paramValue);
+						WebcfgInfo("Response paramValue is %s\n", paramValue);
 						pName = strdup(rbusProperty_GetName(next));
 						(*paramArr)[i] = (param_t *) malloc(sizeof(param_t));
 
-						WebcfgDebug("Framing paramArr\n");
+						WebcfgInfo("Framing paramArr\n");
 						(*paramArr)[i][0].name = strdup(pName);
 						(*paramArr)[i][0].value = strdup(paramValue);
 						(*paramArr)[i][0].type = mapRbusToWdmpDataType(type_t);
-						WebcfgDebug("success: %s %s %d \n",(*paramArr)[i][0].name,(*paramArr)[i][0].value, (*paramArr)[i][0].type);
+						WebcfgInfo("success: %s %s %d \n",(*paramArr)[i][0].name,(*paramArr)[i][0].value, (*paramArr)[i][0].type);
 						*retValCount = resCount;
 						*retStatus = WDMP_SUCCESS;
 						if(paramValue !=NULL)

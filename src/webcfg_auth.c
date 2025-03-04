@@ -161,7 +161,7 @@ void execute_token_script(char *token, char *name, size_t len, char *mac, char *
         if(file)
         {
             snprintf(command,sizeof(command),"%s %s %s",name,serNum,mac);
-            WebcfgInfo("execute_token_script command is initiated\n");
+            WebcfgInfo("execute_token_script command is initiated: %s\n",command);
             out = popen(command, "r");
             WebcfgInfo("execute_token_script command is executed\n");
             if(out)

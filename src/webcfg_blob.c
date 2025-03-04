@@ -281,7 +281,7 @@ uint16_t generateRandomId()
 		WebcfgError("fread failed.\n");
 		return 0;
 	}
-	WebcfgDebug("generateRandomId\n %d",random_key);
+	WebcfgInfo("generateRandomId\n %d",random_key);
 	fclose(fp);		
 	return(random_key);
 }

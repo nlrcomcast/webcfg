@@ -109,7 +109,7 @@ void initMaintenanceTimer()
 
 	if( upgrade_start_time != NULL )
 	{
-		WebcfgDebug("upgrade_start_time is %s\n",upgrade_start_time);
+		WebcfgInfo("upgrade_start_time is %s\n",upgrade_start_time);
 		fw_start_time = atoi(upgrade_start_time);
 		WEBCFG_FREE(upgrade_start_time);
 	}
@@ -122,7 +122,7 @@ void initMaintenanceTimer()
 	upgrade_end_time = getFirmwareUpgradeEndTime();
 	if( upgrade_end_time != NULL )
 	{
-		WebcfgDebug("upgrade_end_time is %s\n",upgrade_end_time);
+		WebcfgInfo("upgrade_end_time is %s\n",upgrade_end_time);
 		fw_end_time = atoi(upgrade_end_time);
 		WEBCFG_FREE(upgrade_end_time);
 	}
@@ -134,14 +134,14 @@ void initMaintenanceTimer()
 
 	if( fw_start_time == fw_end_time )
 	{
-		WebcfgDebug("start and end time values are equal\n");
+		WebcfgInfo("start and end time values are equal\n");
 		fw_start_time = MIN_MAINTENANCE_TIME;
 		fw_end_time = MAX_MAINTENANCE_TIME;
 	}
 
 	if( fw_start_time > fw_end_time )
 	{
-		WebcfgDebug("start time is greater than end time\n");
+		WebcfgInfo("start time is greater than end time\n");
 		fw_start_time = fw_start_time - 86400;         //to get a time within the day
 	}
 
@@ -156,7 +156,7 @@ void initMaintenanceTimer()
 		time_val = time_val + 86400;         //To set a time in next day
 	}
 
-	WebcfgDebug("The value of maintenance_time_val is %ld\n",time_val);
+	WebcfgInfo("The value of maintenance_time_val is %ld\n",time_val);
 	set_global_maintenance_time(time_val);
 
 }

@@ -56,7 +56,7 @@ void initWebcfgProperties(char * filename)
 	char *p;
 	char *token;
 
-	WebcfgDebug("webcfg properties file path is %s\n", filename);
+	WebcfgInfo("webcfg properties file path is %s\n", filename);
 	fp = fopen(filename,"r");
 
 	if (fp == NULL)
@@ -71,7 +71,7 @@ void initWebcfgProperties(char * filename)
 
 		if(NULL != (value = strstr(str,"WEBCONFIG_SUPPORTED_DOCS_BIT=")))
 		{
-			WebcfgDebug("The value stored is %s\n", str);
+			WebcfgInfo("The value stored is %s\n", str);
 			value = value + strlen("WEBCONFIG_SUPPORTED_DOCS_BIT=");
 			value[strlen(value)-1] = '\0';
 			setsupportedDocs(value);

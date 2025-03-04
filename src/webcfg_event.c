@@ -158,11 +158,11 @@ void* blobEventHandler()
 				WebcfgError("Timer expired_doc %s. No event received within timeout period\n", expired_doc);
 				//reset timer. Generate internal EXPIRE event with new trans_id and retry.
 				tx_id = generateRandomId(1001,3000);
-				WebcfgDebug("EXPIRE event tx_id generated is %lu\n", (long)tx_id);
+				WebcfgInfo("EXPIRE event tx_id generated is %lu\n", (long)tx_id);
 				expired_node = getTimerNode(expired_doc);
 				updateTimerList(expired_node, false, expired_doc, tx_id, 0);
 				createTimerExpiryEvent(expired_doc, tx_id);
-				WebcfgDebug("After createTimerExpiryEvent\n");
+				WebcfgInfo("After createTimerExpiryEvent\n");
 			}
 			else
 			{
@@ -171,11 +171,11 @@ void* blobEventHandler()
 		}
 		else
 		{
-			WebcfgDebug("Waiting at timer loop of 5s\n");
+			WebcfgInfo("Waiting at timer loop of 5s\n");
 			sleep(5);
 			if (get_global_shutdown())
 			{
-				WebcfgDebug("g_shutdown true, break timer expire events\n");
+				WebcfgInfo("g_shutdown true, break timer expire events\n");
 				break;
 			}
 		}
@@ -183,7 +183,7 @@ void* blobEventHandler()
 	ret = unregisterWebcfgEvent();
 	if(ret)
 	{
-		WebcfgDebug("unregisterWebcfgEvent success\n");
+		WebcfgInfo("unregisterWebcfgEvent success\n");
 	}
 	else
 	{
@@ -912,21 +912,21 @@ int checkTimerExpired (char **exp_doc)
 	//Traverse through all docs in list, decrement timer and check if any doc expired.
 	while (NULL != temp)
 	{
-		WebcfgDebug("checking expiry for temp->subdoc_name %s\n",temp->subdoc_name);
+		WebcfgInfo("checking expiry for temp->subdoc_name %s\n",temp->subdoc_name);
 		if (temp->running)
 		{
-			WebcfgDebug("timer running for doc %s temp->timeout: %d\n",temp->subdoc_name, (int)temp->timeout);
+			WebcfgInfo("timer running for doc %s temp->timeout: %d\n",temp->subdoc_name, (int)temp->timeout);
 			if((int)temp->timeout <= 0)
 			{
 				WebcfgInfo("Timer Expired for doc %s, doc apply failed\n", temp->subdoc_name);
 				*exp_doc = strdup(temp->subdoc_name);
-				WebcfgDebug("*exp_doc is %s\n", *exp_doc);
+				WebcfgInfo("*exp_doc is %s\n", *exp_doc);
 				return true;
 			}
 			pthread_mutex_lock (&expire_timer_mut);
 			temp->timeout = temp->timeout - 5;
 			pthread_mutex_unlock (&expire_timer_mut);
-			WebcfgDebug("temp->timeout %d for doc %s\n", temp->timeout, temp->subdoc_name);
+			WebcfgInfo("temp->timeout %d for doc %s\n", temp->timeout, temp->subdoc_name);
 		}
 		temp= temp->next;
 	}
