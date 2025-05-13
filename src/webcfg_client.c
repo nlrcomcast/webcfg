@@ -54,6 +54,8 @@ static void get_parodus_url(char **parodus_url, char **client_url);
 /*----------------------------------------------------------------------------*/
 void initWebConfigClient()
 {
+	WebcfgInfo("Wait 2Sec for connect to parodus\n");
+	sleep(2);
 	connect_parodus();
 	webConfigClientReceive();
 }
