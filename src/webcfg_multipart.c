@@ -239,7 +239,7 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 		{
 			//loadInitURLFromFile(&webConfigURL);
 			Get_Webconfig_URL(configURL);
-			WebcfgDebug("primary sync url fetched is %s\n", configURL);
+			WebcfgInfo("primary sync url fetched is %s\n", configURL);
 		}
 		else
 		{
@@ -250,7 +250,7 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 				docname_upper[0] = toupper(docname_upper[0]);
 				WebcfgDebug("docname is %s and in uppercase is %s\n", docname, docname_upper);
 				Get_Supplementary_URL(docname_upper, configURL);
-				WebcfgInfo("Supplementary sync url fetched is %s\n", configURL);
+				WebcfgDebug("Supplementary sync url fetched is %s\n", configURL);
 				if( strcmp(configURL, "NULL") == 0)
 				{
 					WebcfgInfo("Supplementary sync with cloud is disabled as configURL is NULL\n");
@@ -263,10 +263,10 @@ WEBCFG_STATUS webcfg_http_request(char **configData, int r_count, int status, lo
 		}
 		if(strlen(configURL)>0)
 		{
+            WebcfgInfo("configURL: %s\n", configURL);
 			//Replace {mac} string from default init url with actual deviceMAC
 			WebcfgDebug("replaceMacWord to actual device mac\n");
-			// webConfigURL = replaceMacWord(configURL, c, get_deviceMAC());
-			webConfigURL = replaceMacWord(configURL, c, NULL);
+			webConfigURL = replaceMacWord(configURL, c, get_deviceMAC());
 			if(webConfigURL == NULL)
 			{
 				WebcfgError("replaceMacWord returned NULL. Failed to set webConfigURL\n");
@@ -2316,7 +2316,7 @@ void checkValidURL(char **s) {
         else
         {
             // If the MAC address is not empty
-            WebcfgDebug("URL is having valid MAC Address.\n");
+            WebcfgInfo("URL is having valid MAC Address.\n");
 
 			// Validate if the MAC is correct for the box
             const char *mac = get_deviceMAC();
@@ -2343,6 +2343,8 @@ char *replaceMacWord(const char *s, const char *macW, const char *deviceMACW)
         WebcfgInfo("macW or configURL is NULL\n");
         return NULL;
     }
+    WebcfgInfo("replaceMacWord: Received configURL is %s\n", s ? s : "NULL");
+    WebcfgInfo("replaceMacWord: Received macW is %s\n", macW ? macW : "NULL");
 	char *result = NULL;
 	int i, cnt = 0;
     
@@ -2351,11 +2353,13 @@ char *replaceMacWord(const char *s, const char *macW, const char *deviceMACW)
     // When device mac is NULL replace with a fallback mac 
     if (deviceMACW == NULL || deviceMACW[0] == '\0')
     {
+        WebcfgInfo("replaceMacWord: Device mac is NULL or Empty. Replacing with a fallback mac\n");
         deviceMACW = "000000000000";
     }
 
+    WebcfgInfo("replaceMacWord: Before replacement, deviceMACW is %s\n", deviceMACW ? deviceMACW : "NULL");
 	int deviceMACWlen = strlen(deviceMACW);
-    WebcfgInfo("deviceMACWlen: %d\n", deviceMACWlen); // It should be 12
+    WebcfgInfo("replaceMacWord: deviceMACWlen is %d\n", deviceMACWlen); // It should be 12
 	int macWlen = strlen(macW);
 	
 	// Counting the number of times mac word occur in the string
@@ -2391,6 +2395,7 @@ char *replaceMacWord(const char *s, const char *macW, const char *deviceMACW)
 		}
 	}
 	result[i] = '\0';
+    WebcfgInfo("replaceMacWord: Final replaced string: %s\n", result);
 	return result;
 }
 
