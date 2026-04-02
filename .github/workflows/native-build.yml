@@ -17,6 +17,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Install the dependent packages
+      - name: Install packages
+        run: |
+          sudo apt update
+          sudo apt-get -y install libcunit1 libcunit1-doc libcunit1-dev libmsgpack-dev gcovr libtool xsltproc docbook-xsl uuid-dev libcurl4-openssl-dev lcov libmsgpack* libcjson-dev build-essential
+
+      - name: Make Build Directory
+        run: mkdir build
+
+      - name: CMake
+        working-directory: build
+        run: |
+          cmake .. -DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true
+
+      - name: Unit tests run
+        working-directory: build
+        run: |
+          ps aux            
+          make 
+
       - name: native build
         run: |
           # Trust the workspace
