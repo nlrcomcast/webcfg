@@ -1,4 +1,4 @@
-name: Build Utopia Component in Native Environment
+name: Build webconfig Component for Coverity
 
 on:
   push:
@@ -23,6 +23,7 @@ jobs:
           apt-get update
           apt-get install -y cmake
           apt-get -y install libcunit1 libcunit1-dev libmsgpack-dev libtool xsltproc docbook-xsl-ns uuid-dev libcurl4-openssl-dev lcov libmsgpack* libcjson-dev build-essential
+          pip3 install cmake --upgrade
 
       - name: Make Build Directory
         run: mkdir build
@@ -32,7 +33,7 @@ jobs:
         run: |
           cmake .. -DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true
 
-      - name: Unit tests run
+      - name: Coverity run
         working-directory: build
         run: |
           ps aux
