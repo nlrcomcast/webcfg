@@ -21,9 +21,7 @@ jobs:
       - name: Install packages
         run: |
           apt-get update
-          apt-get install -y cmake
           apt-get -y install libcunit1 libcunit1-dev libmsgpack-dev libtool xsltproc docbook-xsl-ns uuid-dev libcurl4-openssl-dev lcov libmsgpack* libcjson-dev build-essential
-          pip3 install cmake --upgrade
 
       - name: Make Build Directory
         run: mkdir build
