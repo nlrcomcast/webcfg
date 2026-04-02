@@ -20,7 +20,8 @@ jobs:
       # Install the dependent packages
       - name: Install packages
         run: |
-          apt-get -y install libcunit1 libcunit1-doc libcunit1-dev libmsgpack-dev libtool xsltproc docbook-xsl uuid-dev libcurl4-openssl-dev lcov libmsgpack* libcjson-dev build-essential
+          apt-get update
+          apt-get -y install libcunit1 libcunit1-dev libmsgpack-dev libtool xsltproc docbook-xsl-ns uuid-dev libcurl4-openssl-dev lcov libmsgpack* libcjson-dev build-essential
 
       - name: Make Build Directory
         run: mkdir build
