@@ -7,8 +7,8 @@ on:
     branches: [ main, 'sprint/**', 'release/**', topic/RDK*, develop, cov ]
 
 jobs:
-  build-utopia-on-pr:
-    name: Build utopia component in github rdkcentral
+  build-webcfg-on-pr:
+    name: Build webcfg component in github rdkcentral
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/rdkcentral/docker-rdk-ci:latest
@@ -16,27 +16,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      # Install the dependent packages
-      - name: Install packages
-        run: |
-          apt-get update
-          apt-get -y install libcunit1 libcunit1-dev libmsgpack-dev libtool xsltproc docbook-xsl-ns uuid-dev libcurl4-openssl-dev lcov libmsgpack* libcjson-dev build-essential
-
-      - name: Make Build Directory
-        run: mkdir build
-
-      - name: CMake
-        working-directory: build
-        run: |
-          cmake .. -DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true
-
-      - name: Coverity run
-        working-directory: build
-        run: |
-          ps aux
-          cmake --version
-          make 
 
       - name: native build
         run: |
