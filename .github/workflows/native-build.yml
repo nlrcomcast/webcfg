@@ -10,8 +10,8 @@ jobs:
   build-webcfg-on-pr:
     name: Build webcfg component in github rdkcentral
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/rdkcentral/docker-rdk-ci:latest
+    #container:
+      #image: ghcr.io/rdkcentral/docker-rdk-ci:latest
 
     steps:
       - name: Checkout code
