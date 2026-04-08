@@ -14,7 +14,7 @@
         "build": {
           "type": "cmake",
           "build_dir": "build",
-          "cmake_flags": "cmake .. -DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true",
+          "cmake_flags": "-DWEBCONFIG_BIN_SUPPORT:BOOL=true -DWAN_FAILOVER_SUPPORTED:BOOL=true",
           "configure_options_file": "cov_docker_script/configure_options.conf"
         }
 
