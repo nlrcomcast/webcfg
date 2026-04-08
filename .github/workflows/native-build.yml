@@ -19,7 +19,9 @@ jobs:
 
       - name: native build
         run: |
-          apt-get install -y libssl-dev zlib1g-dev build-essential
+          uname -a
+          cmake --version
+          openssl version -a
           # Trust the workspace
           git config --global --add safe.directory '*'
           # Pull the latest changes for the native build system
