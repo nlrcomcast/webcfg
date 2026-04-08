@@ -33,3 +33,17 @@ jobs:
           ./build_tools_workflows/cov_docker_script/build_native.sh ./cov_docker_script/component_config.json "$(pwd)"
         env:
           GITHUB_TOKEN: ${{ secrets.RDKCM_RDKE }}
+          
+      - name: Error Log
+        if: failure()
+        run: |
+              LOG_FILE="/__w/webcfg/webcfg/build/_prefix/curl/src/curl-build/CMakeFiles/CMakeError.log"
+              if [ -f "$LOG_FILE" ]; then
+                echo "--- START OF CMAKE ERROR LOG ---"
+                cat "$LOG_FILE"
+                echo "--- END OF CMAKE ERROR LOG ---"
+              else
+                echo "CMakeError.log not found at $LOG_FILE"
+                # Optional: find where the log actually is if the path shifted
+                find /__w/webcfg/webcfg/build -name "CMakeError.log" -exec cat {} +
+              fi          
