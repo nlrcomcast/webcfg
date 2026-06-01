@@ -51,12 +51,7 @@ void test_multipart()
 		printf("\nProvide config URL as argument\n");
 		return;
 	}
-#ifdef _ONESTACK_PRODUCT_REQ_
-    char *propFile = getWebcfgPropsFileBasedOnDeviceMode();
-    initWebcfgProperties(propFile);
-#else
 	initWebcfgProperties(WEBCFG_PROPERTIES_FILE);
-#endif
 	initWebConfigNotifyTask();
 	processWebcfgEvents();
 	initEventHandlingTask();

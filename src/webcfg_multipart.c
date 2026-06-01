@@ -1560,7 +1560,8 @@ void createCurlHeader( struct curl_slist *list, struct curl_slist **header_list,
 	size_t supplementary_docs_size = 0;
 #ifdef _ONESTACK_PRODUCT_REQ_
 	char *DeviceMode_header = NULL;
-#endif	
+	char *DeviceMode = NULL;
+#endif
 
 	WebcfgDebug("Start of createCurlheader\n");
 	//Fetch auth JWT token from cloud.
@@ -1885,6 +1886,17 @@ void createCurlHeader( struct curl_slist *list, struct curl_slist **header_list,
 		WebcfgError("Failed to get ModelName\n");
 	}
 #ifdef _ONESTACK_PRODUCT_REQ_
+	if(strlen(g_DeviceMode) ==0)
+	{
+		DeviceMode = getDeviceMode();
+		if(DeviceMode != NULL)
+		{
+		       strncpy(g_DeviceMode, DeviceMode, sizeof(g_DeviceMode)-1);
+		       WebcfgDebug("g_DeviceMode fetched is %s\n", g_DeviceMode);
+		       WEBCFG_FREE(DeviceMode);
+		}
+	}
+
 	if(strlen(g_DeviceMode))
 	{
 		DeviceMode_header = (char *) malloc(sizeof(char)*MAX_BUF_SIZE);
@@ -2654,16 +2666,3 @@ void setForceSyncTransID(char *ForceSyncTransID)
 const char* getForceSyncTransID() {
     return g_ForceSyncTransID;
 }
-
-#ifdef _ONESTACK_PRODUCT_REQ_
-void setDeviceMode(char *mode)
-{
-    if (mode == NULL)
-    {
-        snprintf(g_DeviceMode, sizeof(g_DeviceMode), "residential");
-        return;
-    }
-
-    snprintf(g_DeviceMode, sizeof(g_DeviceMode), "%s", mode);
-}
-#endif
