@@ -1,0 +1,19 @@
+name: Coverity Full Analysis Scan
+
+on:
+  push:
+    branches: [ master ]
+    paths: ['**/*.c', '**/*.cpp', '**/*.cc', '**/*.cxx', '**/*.h', '**/*.hpp']
+
+jobs:
+  call_coverity_full_scan:
+    uses: rdk-common/build_tools_workflows/.github/workflows/coverity_component_full_scan.yml@develop
+    with:
+      branchName: ${{ github.ref_name }}
+      # Specify your actual build command here
+      buildCommand: sh build.sh
+      # Specify any packages required for building your components. 
+      # Enable the customSetup and add the package names below.
+      #customSetup: |
+      #  apt-get update -y
+      #  apt-get install -y vim
