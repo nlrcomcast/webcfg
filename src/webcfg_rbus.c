@@ -972,11 +972,11 @@ rbusError_t webcfgSubdocForceResetSetHandler(rbusHandle_t handle, rbusProperty_t
             {
                 SubdocResetVal = strdup(data);
                 free(data);
-		char str[256] = {'\0'};
+		char str[MAX_SUBDOC_COUNT * MAX_SUBDOC_NAME_LEN] = {'\0'};
 		int n = 0;
 		webcfgError_t ret = ERROR_FAILURE;
 		char delim[] = ",";
-		char subdocNames[16][16] = {{'\0'}};
+		char subdocNames[MAX_SUBDOC_COUNT][MAX_SUBDOC_NAME_LEN] = {{'\0'}};
 		strncpy(str, SubdocResetVal, sizeof(str)-1);
 		WebcfgInfo("Subdocs need to reset from webconfig DB & tmplist - %s\n",str);
 		char *ptr = strtok(str, delim);
